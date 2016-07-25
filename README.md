@@ -1,6 +1,11 @@
 # admin-scripts
 
-A few bash scripts for OrganiCity
+A few bash scripts for OrganiCity.
+
+Required packages
+ * curl : the well known command-line HTTP client
+ * jq : lightweight and flexible command-line JSON processor
+
 
 ## oc-token
 
