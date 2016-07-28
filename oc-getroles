@@ -1,0 +1,42 @@
+#!/bin/bash
+
+dirName=`dirname $0`
+progName=`basename $0`
+
+
+# Usage
+# =====
+
+function usage() {
+  echo "NOM"
+  echo "       $progName"
+  echo "SYNOPSIS"
+  echo "       $progName client_login client_password userSub"
+  echo "DESCRIPTION"
+  echo "       Requests an access token on the authentication SERVEUR using client credentials,"
+  echo "       then gets the list of the user (using its related userSub) roles."
+}
+
+
+# Command line
+# ============
+
+if [[ "$1" == "--help" || "$1" == "-h" || $# -ne 3 ]]; then
+  usage
+  exit 1
+fi
+
+
+# Execution
+# =========
+
+token=`${dirName}/oc-token $1 $2`
+
+if [ "$token" == "null" ]; then
+  echo "ERREUR invalid token. Please check client credentials."
+  exit 1
+fi
+
+curl -i --header "Authorization: Bearer $token" https://accounts.organicity.eu/permissions/users/$3/roles
+echo ""
+
