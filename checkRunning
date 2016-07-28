@@ -1,0 +1,105 @@
+#!/bin/bash
+
+dirName=`dirname $0`
+progName=`basename $0`
+
+
+# Directories
+root="$HOME"
+dropin="$root/dropin"
+running="$root/running"
+logDir="$root/log"
+
+mkdir -p $logDir
+mkdir -p $dropin
+mkdir -p $running
+
+# files
+watchdogLog="$logDir/watchdog.log"
+
+# Usage
+# =====
+
+function usage() {
+  echo "NOM"
+  echo "       $progName"
+  echo "SYNOPSIS"
+  echo "       $progName"
+  echo "DESCRIPTION"
+  echo "       Script which checks if the manager is already running, and restarts"
+  echo "       it if nedded."
+  echo "       Activity is logged into $watchdogLog"
+}
+
+
+# Command line
+# ============
+
+if [ "$1" != "" ]; then
+  usage
+  exit 1
+fi
+
+
+# Execution
+# =========
+
+# variables
+date=`date '+%Y-%m-%d'`
+time=`date '+%H:%M'`
+ts="$date $time"
+h=`date '+%H'`
+m=`date '+%M'`
+u=`echo $m | cut -c 2`
+
+
+# New Day ?
+
+if [[ "$h" == "00" && "$m" == "00" ]]; then
+  echo ""           >> $watchdogLog
+  echo ""           >> $watchdogLog
+  echo "==========" >> $watchdogLog
+  echo "$date"      >> $watchdogLog
+  echo "==========" >> $watchdogLog
+  echo ""           >> $watchdogLog
+fi
+
+
+# Need to copy something ?
+
+if [ `ls $dropin | wc -l` -ne 0 ]; then
+  echo ""
+  pid=`ps -ef | grep etienne | grep java | grep -v grep | tr -s ' ' | cut -d ' ' -f 2`
+  if [ "$pid" != "" ]; then
+     echo "[INFO] $ts stopping process $pid" >> $watchdogLog
+     kill -9 $pid
+  fi
+  # wait program terminason AND wait for the end of a copy into dropin
+  sleep 5
+  echo "[INFO] $ts moving files from $dropin" >> $watchdogLog
+  mv -f $dropin/* $running
+fi
+
+
+# Need tostart ?
+
+pid=`ps -ef | grep etienne | grep java | grep -v grep | tr -s ' ' | cut -d ' ' -f 2`
+if [ "$pid" != "" ]; then
+  if [ "$m" == "00" ]; then
+    echo "" >> $watchdogLog
+    echo -n "$h " >> $watchdogLog
+  fi
+else
+  echo "" >> $watchdogLog
+  echo "[INFO] $ts starting manager" >> $watchdogLog
+  echo "" >> $watchdogLog
+  cd $running
+  nohup /usr/bin/java -jar manager-*.jar & &>/dev/null
+  echo -n "$h " >> $watchdogLog
+  for i in `seq $m`; do
+    echo -n " " >> $watchdogLog
+  done
+fi
+
+echo -n "$u" >> $watchdogLog
+
