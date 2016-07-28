@@ -14,7 +14,7 @@ function usage() {
   echo "       $progName client_login client_password userSub"
   echo "DESCRIPTION"
   echo "       Requests an access token on the authentication SERVEUR using client credentials,"
-  echo "       then gets the list of the user (using its related userSub) roles."
+  echo "       then gets the list of a user (using its related userSub) roles."
 }
 
 
