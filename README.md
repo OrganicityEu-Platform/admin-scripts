@@ -6,7 +6,7 @@ Required packages
  * curl : the well known command-line HTTP client
  * jq : lightweight and flexible command-line JSON processor
 
-## 1. Scripts for role management
+## 1. Role management scripts
 
 ### 1.1 oc-token
 
