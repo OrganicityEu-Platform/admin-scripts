@@ -61,7 +61,6 @@ if [[ "$h" == "00" && "$m" == "00" ]]; then
   echo "==========" >> $watchdogLog
   echo "$date"      >> $watchdogLog
   echo "==========" >> $watchdogLog
-  echo ""           >> $watchdogLog
 fi
 
 
@@ -86,9 +85,10 @@ fi
 
 pid=`ps -ef | grep etienne | grep java | grep -v grep | tr -s ' ' | cut -d ' ' -f 2`
 if [ "$pid" != "" ]; then
+  # new hour
   if [ "$m" == "00" ]; then
     echo "" >> $watchdogLog
-    echo -n "$h " >> $watchdogLog
+    echo -n "$h" >> $watchdogLog
   fi
 else
   echo "" >> $watchdogLog
@@ -102,5 +102,8 @@ else
   done
 fi
 
+if [ "$u" == "0" ]; then
+  echo -n " " >> $watchdogLog
+fi
 echo -n "$u" >> $watchdogLog
 
