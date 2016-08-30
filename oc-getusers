@@ -1,0 +1,49 @@
+#!/bin/bash
+
+dirName=`dirname $0`
+progName=`basename $0`
+
+
+# Usage
+# =====
+
+function usage() {
+  echo "NOM"
+  echo "       $progName"
+  echo "SYNOPSIS"
+  echo "       $progName client_login client_password"
+  echo "DESCRIPTION"
+  echo "       Requests an access token on the authentication SERVEUR using client credentials,"
+  echo "       then gets the list of all the users subs."
+}
+
+
+# Command line
+# ============
+
+if [[ "$1" == "--help" || "$1" == "-h" || $# -ne 2 ]]; then
+  usage
+  exit 1
+fi
+
+
+# Execution
+# =========
+
+token=`${dirName}/oc-token $1 $2`
+
+if [ "$token" == "null" ]; then
+  echo "ERREUR invalid token. Please check client credentials."
+  exit 1
+fi
+
+typeset -i offset
+offset=0
+count=50
+
+# this is quick and dirty isn't it?
+for i in `seq 4`; do
+  curl -s --header "Authorization: Bearer $token" "https://accounts.organicity.eu/permissions/users?offset=${offset}&count=${count}" | grep -v "\[\]" | sed "s/\"},{/\n/g" | sed "s/^\[{//" | sed "s/}\]/\n/" | cut -d '"' -f 4,8- | tr '"' ' ' | grep -Ev "^$"
+  offset=$offset+50
+done
+
