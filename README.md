@@ -23,12 +23,13 @@ Requests an access token on the authentication server using client credentials, 
 
 ## 2. Role management scripts
 
-
 ### 2.1 oc-getroles
 
 usage : ```oc-getroles client_login client_password userSub```
 
 Requests an access token on the authentication server using client credentials, then gets the list of a user (using his/her related userSub) roles.
+
+role example : 'manager-dev:dictionary-user'
 
 ### 2.2 oc-addrole
 
@@ -36,7 +37,7 @@ usage : ```oc-addrole client_login client_password userSub roleName```
 
 Requests an access token on the authentication server using client credentials, then gives a user (using his/her related userSub) the role roleName.
 
-role example : 'manager-dev:site-user'
+role example : 'manager-dev:dictionary-user'
 
 ### 2.3 oc-removerole
 
@@ -44,13 +45,15 @@ usage : ```oc-removerole client_login client_password userSub roleName```
 
 Requests an access token on the authentication server using client credentials, then remove a role to a user identified by his/her sub.
 
-### 2.3 oc-addroletoall
+role example : 'manager-dev:dictionary-user'
+
+### 2.4 oc-addroletoall
 
 usage : ```oc-addroletoall client_login client_password roleName```
 
 Requests an access token on the authentication server using client credentials, then gives all users the role roleName
 
-role example : 'manager-dev:site-user'
+role example : 'manager-dev:dictionary-user'
 
 ## 2. misc
 
