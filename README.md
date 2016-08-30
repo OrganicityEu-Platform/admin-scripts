@@ -6,6 +6,9 @@ Required packages
  * curl : the well known command-line HTTP client
  * jq : lightweight and flexible command-line JSON processor
 
+see also : [Organicity Accounts - Permission Component](https://organicityeu.github.io/api/Permissions.html)
+
+
 ## 1. General purpose scripts
 
 ### 1.1 oc-token
@@ -20,6 +23,8 @@ usage : ```oc-getusers client_login client_password```
 
 Requests an access token on the authentication server using client credentials, then gets the list of all the users subs and names.
 
+see also : [Related API](https://organicityeu.github.io/api/Permissions.html#path--users)
+
 
 ## 2. Role management scripts
 
@@ -31,6 +36,9 @@ Requests an access token on the authentication server using client credentials, 
 
 role example : 'manager-dev:dictionary-user'
 
+see also : [Related API](https://organicityeu.github.io/api/Permissions.html#operation--users--userId--roles-get)
+
+
 ### 2.2 oc-addrole
 
 usage : ```oc-addrole client_login client_password userSub roleName```
@@ -38,6 +46,9 @@ usage : ```oc-addrole client_login client_password userSub roleName```
 Requests an access token on the authentication server using client credentials, then gives a user (using his/her related userSub) the role roleName.
 
 role example : 'manager-dev:dictionary-user'
+
+see also : [Related API](https://organicityeu.github.io/api/Permissions.html#operation--users--userId--roles-post)
+
 
 ### 2.3 oc-removerole
 
@@ -47,6 +58,9 @@ Requests an access token on the authentication server using client credentials, 
 
 role example : 'manager-dev:dictionary-user'
 
+see also : [Related API](https://organicityeu.github.io/api/Permissions.html#operation--users--userId--roles--roleName--delete)
+
+
 ### 2.4 oc-addroletoall
 
 usage : ```oc-addroletoall client_login client_password roleName```
@@ -54,6 +68,7 @@ usage : ```oc-addroletoall client_login client_password roleName```
 Requests an access token on the authentication server using client credentials, then gives all users the role roleName
 
 role example : 'manager-dev:dictionary-user'
+
 
 ## 2. misc
 
