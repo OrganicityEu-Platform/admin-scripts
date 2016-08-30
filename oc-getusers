@@ -14,7 +14,8 @@ function usage() {
   echo "       $progName client_login client_password"
   echo "DESCRIPTION"
   echo "       Requests an access token on the authentication SERVEUR using client credentials,"
-  echo "       then gets the list of all the users subs."
+  echo "       then gets the list of all the users subs and names."
+  echo "       role example : 'manager-dev:dictionary-user'"
 }
 
 

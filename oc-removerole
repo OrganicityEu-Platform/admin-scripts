@@ -15,6 +15,7 @@ function usage() {
   echo "DESCRIPTION"
   echo "       Requests an access token on the authentication SERVEUR using client credentials,"
   echo "       then remove a role to a user identified by his/her sub."
+  echo "       role example : 'manager-dev:dictionary-user'"
 }
 
 
