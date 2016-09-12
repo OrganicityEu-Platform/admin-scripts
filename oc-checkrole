@@ -1,0 +1,48 @@
+#!/bin/bash
+
+dirName=`dirname $0`
+progName=`basename $0`
+
+
+# Usage
+# =====
+
+function usage() {
+  echo "NOM"
+  echo "       $progName"
+  echo "SYNOPSIS"
+  echo "       $progName client_login client_password userSub role"
+  echo "DESCRIPTION"
+  echo "       Requests an access token on the authentication SERVEUR using client credentials,"
+  echo "       then checks, if a user has a given role assigned"
+  echo "       role example : 'manager-dev:dictionary-user'"
+}
+
+
+# Command line
+# ============
+
+if [[ "$1" == "--help" || "$1" == "-h" || $# -ne 4 ]]; then
+  usage
+  exit 1
+fi
+
+
+# Execution
+# =========
+
+token=`${dirName}/oc-token $1 $2`
+
+if [ "$token" == "null" ]; then
+  echo "ERREUR invalid token. Please check client credentials."
+  exit 1
+fi
+
+response=$(curl --write-out %{http_code} --silent --output /dev/null --header "Authorization: Bearer $token" https://accounts.organicity.eu/permissions/users/$3/roles/$4)
+
+if [ $response -eq 200 ]; then
+	echo "Role assigned!"
+else
+	echo "Role not assigned!"
+fi
+
