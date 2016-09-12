@@ -29,7 +29,6 @@ fi
 # Execution
 # =========
 
-auth=`echo -n "${1}:$2" | base64 -`
-
+auth=`echo -n "${1}:$2" | base64 - | tr -d '\n'`
 curl --silent -X POST --data "grant_type=client_credentials" --header "Authorization: Basic $auth" "https://accounts.organicity.eu/realms/organicity/protocol/openid-connect/token" | jq '.access_token' | cut -d '"' -f 2
 
