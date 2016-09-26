@@ -17,6 +17,9 @@ mkdir -p $running
 # files
 watchdogLog="$logDir/watchdog.log"
 
+me=`whoami`
+
+
 # Usage
 # =====
 
@@ -69,7 +72,7 @@ fi
 if [ `ls $dropin | wc -l` -ne 0 ]; then
   echo "" >> $watchdogLog
   echo "" >> $watchdogLog
-  pid=`ps -ef | grep etienne | grep java | grep -v grep | tr -s ' ' | cut -d ' ' -f 2`
+  pid=`ps -ef | grep $me | grep java | grep -v grep | tr -s ' ' | cut -d ' ' -f 2`
   if [ "$pid" != "" ]; then
      echo "[INFO] $ts stopping process $pid" >> $watchdogLog
      kill -9 $pid
@@ -83,7 +86,7 @@ fi
 
 # Need tostart ?
 
-pid=`ps -ef | grep etienne | grep java | grep -v grep | tr -s ' ' | cut -d ' ' -f 2`
+pid=`ps -ef | grep $me | grep java | grep -v grep | tr -s ' ' | cut -d ' ' -f 2`
 if [ "$pid" != "" ]; then
   # new hour
   if [ "$m" == "00" ]; then
