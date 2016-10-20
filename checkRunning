@@ -98,7 +98,7 @@ else
   echo "[INFO] $ts starting manager" >> $watchdogLog
   echo "" >> $watchdogLog
   cd $running
-  nohup /usr/bin/java -jar manager-*.jar & &>/dev/null
+  nohup /usr/bin/java -jar site-manager-*.jar & &>/dev/null
   echo -n "$h " >> $watchdogLog
   for i in `seq $m`; do
     echo -n " " >> $watchdogLog
